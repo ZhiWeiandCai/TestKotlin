@@ -41,7 +41,7 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
-        ThreadUtil.runOnMain(Runnable { indeterminateBar})
+        ThreadUtil.runOnMain({ indeterminateBar.visibility = View.INVISIBLE }, 9000)
     }
 
     override fun onDestroyView() {
