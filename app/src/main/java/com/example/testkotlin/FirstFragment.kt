@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.navigation.fragment.findNavController
 import com.example.testkotlin.databinding.FragmentFirstBinding
+import com.example.testkotlin.util.ThreadUtil
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -19,12 +21,15 @@ class FirstFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var indeterminateBar: ProgressBar
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        indeterminateBar = binding.indeterminateBar;
         return binding.root
 
     }
@@ -35,6 +40,8 @@ class FirstFragment : Fragment() {
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+
+        ThreadUtil.runOnMain(Runnable { indeterminateBar})
     }
 
     override fun onDestroyView() {
