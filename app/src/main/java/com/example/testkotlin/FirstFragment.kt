@@ -41,10 +41,13 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
-        ThreadUtil.runOnMain({ binding.progressBarLl.visibility = View.INVISIBLE }, 10000)
+        ThreadUtil.runOnMain({
+            _binding?.progressBarLl?.visibility = View.INVISIBLE },
+            10000)
     }
 
     override fun onDestroyView() {
+
         super.onDestroyView()
         _binding = null
     }
