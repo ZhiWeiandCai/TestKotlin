@@ -1,14 +1,15 @@
 package com.example.testkotlin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.testkotlin.databinding.FragmentFirstBinding
 import com.example.testkotlin.util.ThreadUtil
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -21,7 +22,7 @@ class FirstFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private lateinit var indeterminateBar: ProgressBar
+    private var tipDialog: QMUITipDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +30,6 @@ class FirstFragment : Fragment() {
     ): View? {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
-        indeterminateBar = binding.indeterminateBar;
         return binding.root
 
     }
@@ -41,9 +41,15 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
-        ThreadUtil.runOnMain({
+        //进度对话框，等待
+        /*ThreadUtil.runOnMain({
             _binding?.progressBarLl?.visibility = View.INVISIBLE },
-            10000)
+            10000)*/
+        tipDialog = QMUITipDialog.Builder(requireContext())
+            .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+            .setTipWord("正在加载")
+            .create()
+        tipDialog?.show()
     }
 
     override fun onDestroyView() {
